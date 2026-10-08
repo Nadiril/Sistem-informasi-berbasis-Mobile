@@ -1,56 +1,53 @@
-# Welcome to your Expo app 👋
+# Pertemuan1
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Proyek pertemuan 1: starter Expo Router dengan TypeScript dan navigasi tab. Dasar ini menjadi acuan untuk materi routing berbasis file.
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Menjalankan
 
 ```bash
-npm run reset-project
+npm install
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Lalu pindai QR dengan Expo Go, atau tekan `a` (Android), `i` (iOS), `w` (web).
 
-### Other setup steps
+## Struktur
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```
+src/
+├── app/
+│   ├── _layout.tsx      # ThemeProvider + splash screen + AppTabs
+│   ├── index.tsx        # Tab Home (teks hero di baris 38)
+│   └── explore.tsx      # Tab Explore (bagian yang bisa dilipat)
+├── components/
+│   ├── app-tabs.tsx     # NativeTabs: Home dan Explore
+│   ├── hint-row.tsx, themed-text.tsx, themed-view.tsx, ...
+│   └── ui/collapsible.tsx
+├── constants/theme.ts
+├── hooks/               # use-color-scheme, use-theme
+└── global.css
+```
 
-## Learn more
+Routing mengikuti `src/app/`: tiap file adalah satu layar, `_layout.tsx` mendefinisikan navigator.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Konfigurasi
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- `typedRoutes: true` dan `reactCompiler: true` di `app.json`.
+- Path alias di `tsconfig.json`: `@/*` → `./src/*`, `@/* assets` → `./assets/*`.
+- Tema light/dark aktif lewat `ThemeProvider`.
 
-## Join the community
+## Script
 
-Join our community of developers creating universal apps.
+| Script | Fungsi |
+| --- | --- |
+| `npm start` | Dev server Expo |
+| `npm run android` / `ios` / `web` | Jalankan di Android / iOS / browser |
+| `npm run lint` | ESLint |
+| `npm run reset-project` | Pindahkan kode awal ke `app-example` dan buat folder kosong |
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Catatan
+
+- Teks hero di `src/app/index.tsx` baris 38 masih berupa frasa informal yang bisa diganti.
+- Proyek ini memakai TypeScript, berbeda dari folder Pertemuan lain yang memakai JavaScript.
+
+[README utama](../README.md)

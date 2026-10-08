@@ -4,11 +4,11 @@ import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
 export default function App() {
   // Data Akademik Mahasiswa
   const mahasiswa = {
-    nama: 'M N Jamal Thaariq',
+    nama: 'M. Nadiril Khoir',
     npm: '1125102212',
-    prodi: 'S1 Teknik Informatika',
+    prodi: 'D3 Manajemen Informatika',
     semester: 3,
-    ipk: 3.85,
+    ipk: 4.00,
     status: 'Aktif',
     foto: require('./assets/icon.png'),
   };
@@ -23,10 +23,10 @@ export default function App() {
 
   // Data FRS / Mata Kuliah
   const mataKuliahFrs = [
-    { kode: 'KK312408', nama: 'Sistem Informasi Berbasis Mobile', sks: 3, smt: 4 },
+    { kode: 'KK312408', nama: 'Sistem Informasi Berbasis Web', sks: 3, smt: 4 },
     { kode: 'KU312411', nama: 'Sistem Basis Data', sks: 3, smt: 4 },
     { kode: 'KU312412', nama: 'Desain UI/UX', sks: 3, smt: 4 },
-    { kode: 'KK312409', nama: 'Sistem Informasi Berbasis Web', sks: 3, smt: 4 },
+    { kode: 'KK312409', nama: 'Praktek Sistem Informasi Berbasis Web', sks: 3, smt: 4 },
   ];
 
   return (
