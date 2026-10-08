@@ -108,16 +108,6 @@ Aplikasi kasir (POS) dengan nama toko **Berkah Jaya** dalam satu file `App.js`:
 - Grid produk dua kolom, keranjang belanja dengan tombol tambah/kurang jumlah, dan perhitungan total otomatis.
 - Tombol **Bayar** memunculkan `Alert.alert` lalu mengosongkan keranjang.
 
-## Catatan dan Masalah yang Diketahui
-
-- **Pertemuan2 tidak ada** di repo. Folder dimulai dari Pertemuan1, lalu Pertemuan3 dan Pertemuan4.
-- **Pertemuan4, kartu FRS belum selesai**: `mataKuliahFrs` dideklarasikan di baris 25, tetapi kartu kedua masih memakai data `mataKuliah` dan judul yang sama dengan kartu KHS.
-- **Projectsimple, kode alternatif tidak terpakai**: `src/theme.js`, `src/utils/calculator.js` (parser ekspresi rekursif), dan `src/utils/layout.js` tidak diimpor oleh `App.js`.
-- **Projectsimple2, pratinjau keranjang terbatas**: daftar pesanan hanya menampilkan dua item pertama (`cart.slice(0, 2)` di baris 281).
-- **Tanpa test dan CI**: tidak ada direktori `__tests__`, konfigurasi Jest, maupun `.github/`.
-- **File bantuan asisten AI**: setiap folder berisi `AGENTS.md`, `CLAUDE.md`, dan `.claude/settings.json` berisi instruksi untuk agen AI.
-- Seluruh folder sudah pernah dilepas dari git (direktori `.git` dihapus) dan kini menjadi folder biasa.
-
 ## Lisensi
 
 MIT. File `LICENSE` tersedia di tiap folder proyek.
