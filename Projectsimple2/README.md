@@ -1,6 +1,6 @@
 # Projectsimple2
 
-Aplikasi kasir (POS) bernama **Berkah Jaya**, dibuat dengan React Native + Expo dalam satu file `App.js` (575 baris).
+Aplikasi kasir (POS) bernama **Berkah Jaya**, dibuat dengan React Native + Expo dalam satu file `App.js`.
 
 ## Menjalankan
 
@@ -24,6 +24,7 @@ npx expo start
   | Jus Jeruk | Rp10.000 |
 
 - Keranjang ("Pesanan") di bagian bawah layar: tombol tambah/kurang jumlah, jumlah 0 otomatis menghapus item.
+- Semua item keranjang ditampilkan dalam daftar yang bisa digulir (`ScrollView`).
 - Total dan jumlah item dihitung turunan dari state `cart`.
 - Tombol **Bayar** memunculkan `Alert.alert('Pembayaran Berhasil', ...)`, lalu mengosongkan keranjang. Pembayaran kosong ditolak dengan peringatan.
 
@@ -36,7 +37,6 @@ Harga diformat memakai `toLocaleString('id-ID')`.
 
 ## Catatan
 
-- Daftar pesanan hanya menampilkan dua item pertama: `cart.slice(0, 2)` di `App.js` baris 281. Item ketiga dan seterusnya tetap ikut terhitung total, tapi tidak tampil.
 - State keranjang hanya tersimpan di memori (`useState`), tidak ada penyimpanan permanen.
 
 ## Script

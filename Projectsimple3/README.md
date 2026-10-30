@@ -81,7 +81,7 @@ Projectsimple3/
 
 ## Catatan
 
-- `PRD.md` menargetkan **Expo SDK 57**, sedangkan implementasi berjalan di **Expo SDK 58** (React Native 0.88, React 19.3). PRD dibiarkan sebagai dokumen target awal.
+- `PRD.md` dan implementasi sama-sama menargetkan **Expo SDK 58** (React Native 0.88, React 19.3); PRD telah diperbarui ke revisi 1.1.
 - Navigasi memakai React Navigation: native stack untuk `Main` + `NoteEditor` (modal), dan bottom tabs untuk tiga tab utama.
 - Hanya tersedia light mode; dark mode masih ada di daftar fitur opsional PRD.
 - Tidak ada backend, akun, atau sinkronisasi cloud; seluruh data berada di perangkat.

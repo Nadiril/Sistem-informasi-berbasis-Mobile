@@ -1,10 +1,13 @@
 # Product Requirements Document (PRD)
 ## Notes App — React Native + Expo
 
-**Versi dokumen:** 1.0  
+**Versi dokumen:** 1.1
+
 **Status:** Draft untuk implementasi MVP  
 **Platform target:** Android terlebih dahulu, dengan kemungkinan dukungan iOS melalui Expo  
 **Bahasa aplikasi:** Bahasa Indonesia
+
+> **Riwayat revisi 1.1:** target SDK disesuaikan dengan implementasi aktual, yaitu **Expo SDK 58** (React Native 0.88, React 19.3).
 
 ---
 
@@ -42,7 +45,7 @@ Antarmuka menggunakan gaya **Material 3 / Google Pixel-inspired**: ringan, moder
 | Bagian | Teknologi | Ketentuan |
 |---|---|---|
 | Framework mobile | React Native | Menggunakan Expo |
-| SDK | Expo SDK 57 | Target SDK project |
+| SDK | Expo SDK 58 | Target SDK project |
 | Runtime JavaScript | Node.js 24.x | Versi yang kompatibel |
 | Package manager | npm 11.x | Gunakan npm |
 | Bahasa pemrograman | JavaScript | File `.js` dan `.jsx`, bukan TypeScript |
@@ -56,11 +59,11 @@ Antarmuka menggunakan gaya **Material 3 / Google Pixel-inspired**: ringan, moder
 ### 4.1 Kebijakan Kompatibilitas
 
 - Gunakan Node.js 24.x dan npm 11.x.
-- Pastikan versi paket sesuai dengan Expo SDK 57.
+- Pastikan versi paket sesuai dengan Expo SDK 58.
 - Gunakan `npx expo install` untuk paket native yang kompatibel dengan SDK project.
 - Gunakan JavaScript saja. Jangan membuat file `.ts` atau `.tsx`.
 - Gunakan React Navigation bottom tabs sebagai pola navigasi utama.
-- Verifikasi ketersediaan SDK 57 dan dokumentasi resminya sebelum memulai implementasi.
+- Verifikasi ketersediaan SDK 58 dan dokumentasi resminya sebelum memulai implementasi.
 - Jika Expo Go tidak mendukung SDK target, gunakan development build yang sesuai.
 
 ## 5. Ruang Lingkup MVP
@@ -273,7 +276,7 @@ npx create-expo-app@latest notes-app --template blank
 cd notes-app
 ```
 
-Verifikasi SDK yang dihasilkan dan sesuaikan dengan dokumentasi resmi Expo SDK 57 sebelum memasang paket. Template `blank` biasanya memakai JavaScript, tetapi tetap periksa isi project yang dihasilkan.
+Verifikasi SDK yang dihasilkan dan sesuaikan dengan dokumentasi resmi Expo SDK 58 sebelum memasang paket. Template `blank` biasanya memakai JavaScript, tetapi tetap periksa isi project yang dihasilkan.
 
 Pasang dependensi:
 
@@ -290,7 +293,7 @@ npx expo-doctor
 npx expo start
 ```
 
-**Penting:** `create-expo-app@latest` menggunakan template dan SDK default yang tersedia ketika perintah dijalankan. Perintah tersebut tidak menjamin project otomatis memakai SDK 57. Periksa versi `expo` di `package.json` dan ikuti petunjuk resmi untuk SDK 57. Jangan memasang versi paket secara acak karena bisa menyebabkan ketidakcocokan.
+**Penting:** `create-expo-app@latest` menggunakan template dan SDK default yang tersedia ketika perintah dijalankan. Perintah tersebut tidak menjamin project otomatis memakai SDK 58. Periksa versi `expo` di `package.json` dan ikuti petunjuk resmi untuk SDK 58. Jangan memasang versi paket secara acak karena bisa menyebabkan ketidakcocokan.
 
 ## 13. Rencana Implementasi
 
@@ -335,4 +338,4 @@ MVP dianggap selesai jika seluruh persyaratan berprioritas Must terpenuhi, aplik
 
 ---
 
-**Catatan:** PRD ini menetapkan kebutuhan produk dan rancangan teknis awal. Versi paket yang tepat, ketersediaan SDK 57, dan kompatibilitas Expo Go harus diverifikasi terhadap dokumentasi resmi ketika implementasi dimulai.
+**Catatan:** PRD ini menetapkan kebutuhan produk dan rancangan teknis awal. Versi paket yang tepat, ketersediaan SDK 58, dan kompatibilitas Expo Go harus diverifikasi terhadap dokumentasi resmi ketika implementasi dimulai.

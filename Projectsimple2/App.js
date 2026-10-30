@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Pressable,
   FlatList,
+  ScrollView,
   Alert,
 } from 'react-native';
 
@@ -277,8 +278,12 @@ export default function App() {
             Belum ada produk
           </Text>
         ) : (
-          <View style={styles.cartList}>
-            {cart.slice(0, 2).map((item) => (
+          <ScrollView
+            style={styles.cartList}
+            showsVerticalScrollIndicator={false}
+            nestedScrollEnabled
+          >
+            {cart.map((item) => (
               <CartItem
                 key={item.id}
                 item={item}
@@ -286,7 +291,7 @@ export default function App() {
                 onDecrease={decreaseQuantity}
               />
             ))}
-          </View>
+          </ScrollView>
         )}
 
         {/* TOTAL */}

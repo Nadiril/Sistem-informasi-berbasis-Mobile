@@ -29,13 +29,14 @@ Form dibagi menjadi empat bagian:
 3. **Akademik**: `SegmentedButtons` untuk program studi dan semester, serta input IPK.
 4. **Peminatan & pengaturan**: `Checkbox` empat bidang minat dan dua `Switch` (status aktif dan notifikasi akademik).
 
-Tombol **Simpan Profil** menyalin nilai form ke state `mahasiswa` dan menampilkan `Snackbar`. Tombol **Reset Form** mengembalikan form ke nilai bawaan.
+Tombol **Simpan Profil** menyalin nilai form ke state `mahasiswa` dan menampilkan `Snackbar`. Tombol **Reset Form** mengembalikan form ke nilai bawaan. Pesan validasi NPM (tepat 10 digit angka) dan email tampil otomatis saat nilainya tidak valid.
 
 ### Kartu Hasil Studi (KHS)
 
 - `DataTable` di dalam `ScrollView` horizontal.
 - Empat mata kuliah, masing-masing 3 SKS: Sistem Informasi Berbasis Mobile (`KK312408`), Sistem Basis Data, Desain UI/UX, dan Sistem Informasi Berbasis Web.
-- Baris selang-seling dan footer total SKS.
+- Baris selang-seling dan footer total SKS yang dihitung dari data (12 SKS).
+- Tombol **Bagikan KHS** membuka dialog berbagi teks rangkuman KHS.
 
 ## Data Bawaan
 
@@ -61,11 +62,9 @@ Pertemuan5/
 
 ## Catatan
 
-- `HelperText` untuk validasi NPM dan email memakai `visible={false}`, sehingga pesan validasi tidak pernah tampil meskipun nilainya dihitung.
-- Footer KHS menulis **13 SKS**, padahal empat mata kuliah × 3 SKS = **12 SKS**.
-- `formStatusAktif` bernilai awal `false` sementara profil bawaan berstatus "Aktif". Menekan **Simpan Profil** tanpa mengubah switch akan mengubah status menjadi "Cuti".
-- Data peminatan awal berisi `['Fullstack Development']`, tetapi keempat checkbox dimulai dalam keadaan tidak tercentang. Menyimpan tanpa memilih ulang akan mengosongkan peminatan.
-- Tombol **Download KHS** hanya memanggil `console.log`, belum ada unduhan sungguhan.
+- Data profil dan KHS hanya tersimpan di state memori; memuat ulang aplikasi mengembalikan nilai bawaan.
+- Switch status, switch notifikasi, dan checkbox peminatan mengikuti data bawaan, dan **Reset Form** mengembalikan nilai tersebut.
+- **Bagikan KHS** memakai `Share` bawaan React Native, sehingga tampilan dialog berbagi bergantung pada platform. Fitur ini membagikan teks, bukan mengunduh PDF.
 
 ## Script
 

@@ -16,8 +16,8 @@ Kumpulan tugas, latihan, dan proyek praktikum mata kuliah **Sistem Informasi Ber
 
 | Komponen | Versi / Keterangan |
 | --- | --- |
-| Expo SDK | ~57.0.x untuk Pertemuan1, Pertemuan3, Pertemuan4, Pertemuan5, Pertemuan7, Projectsimple, dan Projectsimple2; ~58.0.x untuk Projectsimple3 dan uts_sibm. Pertemuan6 mencampur `expo ^44.0.6` dengan paket ~57.0.x (lihat catatan) |
-| React Native | 0.86.3 (SDK 57) dan 0.88.0 (SDK 58); Pertemuan6 mendeklarasikan `^0.72.17` |
+| Expo SDK | ~57.0.x untuk Pertemuan1, Pertemuan3, Pertemuan4, Pertemuan5, Pertemuan6, Pertemuan7, Projectsimple, dan Projectsimple2; ~58.0.x untuk Projectsimple3 dan uts_sibm |
+| React Native | 0.86.3 (SDK 57) dan 0.88.0 (SDK 58) |
 | React | 19.2.3 (SDK 57) dan 19.3.0 (SDK 58) |
 | TypeScript | ~6.0.3 (khusus Pertemuan1) |
 | Navigasi | expo-router (Pertemuan1, Pertemuan7), React Navigation (Projectsimple3), stack manual (Pertemuan6) |
@@ -61,9 +61,7 @@ Setelah dev server berjalan:
 - Pindai kode QR dengan aplikasi **Expo Go** di HP, atau
 - Tekan `a` untuk emulator Android, `i` untuk iOS simulator, `w` untuk browser.
 
-Folder **Pertemuan5**, **Pertemuan6**, **Pertemuan7**, **Projectsimple3**, dan **uts_sibm** sudah memiliki `node_modules`. Folder lain masih perlu `npm install` sebelum dijalankan.
-
-> **Pertemuan6:** `package.json` memakai `expo ^44.0.6` dan `react-native ^0.72.17` bersama React 19.2.3. Kombinasi ini tidak kompatibel; selaraskan versi dependensi sebelum menjalankan aplikasi (lihat [catatan](#catatan-dan-masalah-yang-diketahui)).
+Folder **Pertemuan5**, **Pertemuan6**, **Pertemuan7**, **Projectsimple**, **Projectsimple3**, dan **uts_sibm** sudah memiliki `node_modules`. Folder lain masih perlu `npm install` sebelum dijalankan.
 
 ## Script
 
@@ -103,15 +101,16 @@ Demo materi **Styling: Inline vs StyleSheet** dalam satu file `App.js`, judul la
 
 - Bagian pertama: kartu profil dibuat sepenuhnya dengan inline style.
 - Bagian kedua: tabel Kartu Hasil Studi (KHS) yang bisa digeser horizontal, dibuat dengan `StyleSheet.create`, lengkap dengan baris selang-seling dan total SKS.
-- Tabel ketiga ditujukan untuk FRS, tetapi masih memakai data dan judul KHS (lihat catatan).
+- Bagian ketiga: tabel Kartu Rencana Studi (FRS) memakai data `mataKuliahFrs` dengan gaya `StyleSheet` yang sama.
+- Total SKS dihitung dari data, bukan angka tetap.
 
 ### Pertemuan5
 
 Demo komponen **React Native Paper** pada layar "Sistem Akademik Mahasiswa" dalam satu file `App.js`:
 
 - Kartu profil mahasiswa: avatar, ringkasan semester/IPK/status/gender, kontak, dan chip peminatan.
-- Form input profil: `TextInput`, `RadioButton`, `SegmentedButtons`, `Checkbox`, `Switch`, dan tombol simpan/reset. Data yang disimpan langsung memperbarui kartu profil dan memunculkan `Snackbar`.
-- Tabel KHS memakai `DataTable` di dalam `ScrollView` horizontal.
+- Form input profil: `TextInput`, `RadioButton`, `SegmentedButtons`, `Checkbox`, `Switch`, dan tombol simpan/reset. Data yang disimpan langsung memperbarui kartu profil dan memunculkan `Snackbar`. Pesan validasi NPM/email muncul saat nilainya tidak valid.
+- Tabel KHS memakai `DataTable` di dalam `ScrollView` horizontal; total SKS dihitung dari data dan tombol **Bagikan KHS** membuka dialog berbagi teks rangkuman.
 - Foto profil diambil dari `assets/Profile.jpeg`.
 
 ### Pertemuan6
@@ -139,7 +138,8 @@ Aplikasi manajemen produk toko **"Toko Anda"** dengan Expo Router, Context, dan 
 Kalkulator dengan tema gelap, terdiri dari:
 
 - `App.js`: komponen `Display` dan `Button`, matriks tombol (`C ± % ÷`, angka, `× − +`, `. =`), mode landscape lewat `useWindowDimensions`.
-- Evaluasi ekspresi memakai `Function()` dengan pemetaan simbol `× ÷ −` ke operator JavaScript, penanganan `±`, `%`, dan pembulatan hasil.
+- Evaluasi ekspresi memakai tokenizer/parser di `src/utils/calculator.js` (tanpa `eval`/`Function`), dengan dukungan `±`, `%`, dan pembulatan hasil.
+- Warna, radius, dan ukuran font responsif diambil dari `src/theme.js` dan `src/utils/layout.js`.
 
 ### Projectsimple2
 
@@ -147,6 +147,7 @@ Aplikasi kasir (POS) dengan nama toko **Berkah Jaya** dalam satu file `App.js`:
 
 - Enam produk hard-coded dengan harga Rupiah (Kopi, Nasi Goreng, Mie Goreng, Es Teh, Roti, Jus Jeruk).
 - Grid produk dua kolom, keranjang belanja dengan tombol tambah/kurang jumlah, dan perhitungan total otomatis.
+- Semua item keranjang ditampilkan dalam daftar yang bisa digulir.
 - Tombol **Bayar** memunculkan `Alert.alert` lalu mengosongkan keranjang.
 
 ### Projectsimple3
@@ -157,7 +158,7 @@ Aplikasi catatan (**Notes App**) yang mengimplementasikan `PRD.md` di folder yan
 - CRUD catatan, pencarian judul/isi, penanda favorit, dan hapus semua catatan dengan konfirmasi.
 - Data disimpan di AsyncStorage dengan key `@notes_app/notes`; catatan lama dinormalisasi agar tetap kompatibel.
 - Tema Material 3-inspired, layout grid dua kolom, loading/empty state, dan penanganan kegagalan penyimpanan.
-- Memakai Expo SDK 58 dan React Navigation (native stack + bottom tabs).
+- Memakai Expo SDK 58 dan React Navigation (native stack + bottom tabs); `PRD.md` sudah disesuaikan ke SDK 58.
 
 ### uts_sibm
 
@@ -165,14 +166,9 @@ Scaffold proyek UTS dari template blank Expo SDK 58. Saat ini `App.js` masih ber
 
 ## Catatan dan Masalah yang Diketahui
 
-- **Pertemuan6 — dependensi tidak selaras.** `expo ^44.0.6` dan `react-native ^0.72.17` dipasang bersama React 19.2.3 dan `expo-status-bar ~57.0.1`. Versi ini tidak kompatibel satu sama lain sehingga aplikasi berisiko gagal dijalankan. Selaraskan seluruh paket ke satu SDK Expo (misalnya dengan membuat ulang proyek dari template SDK terbaru lalu memindahkan kode `App.js` dan `screens/`).
-- **Pertemuan4 — kartu FRS belum selesai.** Kartu ketiga masih berjudul KHS dan memakai `mataKuliah`, bukan `mataKuliahFrs`. Footer juga menulis total 13 SKS padahal empat mata kuliah × 3 SKS = 12 SKS.
-- **Pertemuan5 — total SKS dan validasi.** Footer KHS menulis 13 SKS padahal datanya berjumlah 12 SKS. `HelperText` validasi NPM/email memakai `visible={false}`, sehingga pesan validasi tidak pernah tampil. Switch "Status Mahasiswa Aktif" bernilai awal `false`; menekan Simpan tanpa mengubah switch akan mengubah status profil menjadi "Cuti".
-- **Projectsimple2 — keranjang terpotong.** Daftar pesanan hanya merender `cart.slice(0, 2)`, sehingga item ketiga dan seterusnya tidak terlihat meskipun tetap dihitung dalam total.
-- **Projectsimple — modul alternatif tidak dipakai.** `src/theme.js`, `src/utils/calculator.js`, dan `src/utils/layout.js` tidak diimpor oleh `App.js`.
-- **Projectsimple3 — PRD dan implementasi berbeda versi.** `PRD.md` menargetkan Expo SDK 57, sedangkan proyek yang berjalan memakai SDK 58.
-- **Pertemuan1 — teks contoh.** Teks hero di `src/app/index.tsx` masih berupa frasa informal yang bisa diganti.
-- **uts_sibm — belum diisi.** `PRD.md` kosong dan `App.js` masih template default.
+- **uts_sibm — belum diisi.** `PRD.md` masih kosong dan `App.js` masih template default, sehingga belum ada fitur yang bisa dijalankan.
+- **Data demo, bukan produksi.** Sebagian besar aplikasi memakai data hard-coded. Pertemuan6 menyimpan akun hanya di memori dengan password teks biasa karena fokusnya adalah latihan navigasi, bukan keamanan.
+- **Belum ada pengujian otomatis.** Verifikasi saat ini dilakukan manual serta melalui `expo-doctor` dan export bundle; belum ada suite unit test lintas proyek.
 
 ## Lisensi
 

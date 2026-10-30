@@ -1,7 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+
+import { colors, radius } from './src/theme';
+import { evaluate as evaluateExpression, formatNumber } from './src/utils/calculator';
+import { computeLayout } from './src/utils/layout';
 
 const KEYS = [
   ['C', '±', '%', '÷'],
@@ -40,16 +44,25 @@ function Button({ label, type, wide, onPress }) {
   );
 }
 
-function Display({ last, value, onDelete }) {
+function Display({ last, value, onDelete, valueFontSize, expressionFontSize }) {
   return (
     <View style={styles.display}>
       <Pressable onPress={onDelete} hitSlop={12} style={styles.delete}>
         <Text style={styles.deleteText}>⌫</Text>
       </Pressable>
-      <Text style={styles.expression} numberOfLines={1} adjustsFontSizeToFit>
+      <Text
+        style={[styles.expression, { fontSize: expressionFontSize }]}
+        numberOfLines={1}
+        adjustsFontSizeToFit
+      >
         {last}
       </Text>
-      <Text style={styles.value} numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.3}>
+      <Text
+        style={[styles.value, { fontSize: valueFontSize }]}
+        numberOfLines={1}
+        adjustsFontSizeToFit
+        minimumFontScale={0.3}
+      >
         {value}
       </Text>
     </View>
@@ -62,14 +75,20 @@ export default function Calculator() {
   const [last, setLast] = useState('');
   const [justEquals, setJustEquals] = useState(false);
   const { width, height } = useWindowDimensions();
-  const landscape = width > height;
+  const layout = computeLayout({
+    width,
+    height,
+    topBarHeight: 56,
+    platform: Platform.OS,
+  });
+  const landscape = layout.isLandscape;
 
   const evaluate = (expr) => {
     try {
-      const js = expr.replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-').replace(/,/g, '');
-      const result = Function(`"use strict"; return (${js})`)();
-      if (!isFinite(result)) return 'Error';
-      return String(Math.round(result * 1e10) / 1e10);
+      // Parser di src/utils/calculator.js memakai operator ASCII untuk kurang.
+      const result = evaluateExpression(expr.replace(/−/g, '-'));
+      if (result == null || !Number.isFinite(result)) return 'Error';
+      return formatNumber(result);
     } catch {
       return 'Error';
     }
@@ -126,7 +145,13 @@ export default function Calculator() {
         <StatusBar style="light" />
         <View style={[styles.inner, landscape && styles.innerLandscape]}>
           <Text style={styles.header}>Kalkulator</Text>
-          <Display last={last} value={expression || result} onDelete={backspace} />
+          <Display
+            last={last}
+            value={expression || result}
+            onDelete={backspace}
+            valueFontSize={layout.valueFontSize}
+            expressionFontSize={layout.expressionFontSize}
+          />
           <View style={styles.keypad}>
             {KEYS.map((row, i) => (
               <View key={i} style={styles.row}>
@@ -144,31 +169,31 @@ export default function Calculator() {
 }
 
   const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#0F1115' },
+    container: { flex: 1, backgroundColor: colors.background },
     inner: { flex: 1, padding: 16 },
     innerLandscape: { flexDirection: 'column' },
-    header: { color: '#FFFFFF', fontSize: 24, fontWeight: '700', marginBottom: 12 },
+    header: { color: colors.text, fontSize: 24, fontWeight: '700', marginBottom: 12 },
     display: {
       flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end',
-      backgroundColor: '#171A21', borderRadius: 24, padding: 24, marginBottom: 16,
+      backgroundColor: colors.surface, borderRadius: radius.lg, padding: 24, marginBottom: 16,
     },
-    expression: { color: '#8A8F98', fontSize: 22, fontWeight: '500', marginBottom: 8 },
+    expression: { color: colors.textMuted, fontWeight: '500', marginBottom: 8 },
     delete: { position: 'absolute', top: 16, left: 16, padding: 6 },
-    deleteText: { color: '#8A8F98', fontSize: 22 },
-    value: { color: '#FFFFFF', fontSize: 56, fontWeight: '600' },
+    deleteText: { color: colors.textMuted, fontSize: 22 },
+    value: { color: colors.text, fontWeight: '600' },
     keypad: { gap: 10 },
     row: { flexDirection: 'row', gap: 10, minHeight: 64, flex: 1 },
     button: {
-      flex: 1, borderRadius: 20, backgroundColor: '#252A33',
+      flex: 1, borderRadius: radius.md, backgroundColor: colors.surfaceAlt,
       alignItems: 'center', justifyContent: 'center',
     },
     wide: { flex: 2 },
-    operator: { backgroundColor: '#ec931d' },
-    equals: { backgroundColor: '#9592b4' },
-    clear: { backgroundColor: '#EF4444' },
+    operator: { backgroundColor: colors.accent },
+    equals: { backgroundColor: colors.contrast },
+    clear: { backgroundColor: colors.danger },
     pressed: { opacity: 0.7, transform: [{ scale: 0.96 }] },
-    buttonText: { color: '#FFFFFF', fontSize: 26, fontWeight: '600' },
-    operatorText: { color: '#FFFFFF' },
-    equalsText: { color: '#FFFFFF', fontWeight: '700' },
-    clearText: { color: '#FFFFFF', fontWeight: '700' },
+    buttonText: { color: colors.text, fontSize: 26, fontWeight: '600' },
+    operatorText: { color: colors.onAccent },
+    equalsText: { color: colors.onContrast, fontWeight: '700' },
+    clearText: { color: colors.contrast, fontWeight: '700' },
   });

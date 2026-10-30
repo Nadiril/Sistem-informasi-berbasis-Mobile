@@ -9,8 +9,6 @@ npm install   # node_modules sudah tersedia
 npx expo start
 ```
 
-> Perhatikan catatan dependensi di bagian bawah sebelum menjalankan.
-
 ## Layar
 
 | Layar | File | Fungsi |
@@ -56,7 +54,7 @@ Pertemuan6/
 
 ## Catatan
 
-- **Dependensi tidak selaras.** `package.json` memakai `expo ^44.0.6`, `react-native ^0.72.17`, React `19.2.3`, dan `expo-status-bar ~57.0.1`. Kombinasi ini tidak kompatibel dan dapat menggagalkan Metro/Expo. Selaraskan semua paket ke satu SDK Expo sebelum dijalankan.
+- Dependensi sudah diselaraskan ke Expo SDK 57; `npx expo-doctor` melaporkan 21/21 pemeriksaan lulus dan export bundle Android berhasil.
 - Data user hanya tersimpan di memori; registrasi hilang saat aplikasi dimuat ulang.
 - Password disimpan dan dibandingkan dalam bentuk teks biasa karena ini demo navigasi, bukan modul keamanan.
 - Tombol back bawaan Android tidak terhubung ke fungsi `pop()`, sehingga perilakunya bergantung pada default platform.

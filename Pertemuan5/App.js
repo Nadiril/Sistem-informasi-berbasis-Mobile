@@ -1,7 +1,7 @@
 // Reimplemented pertemuan5 UI using react-native-paper
 import * as React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import { StyleSheet, View, ScrollView, Share, Alert } from 'react-native';
 import {
   Provider as PaperProvider,
   Card,
@@ -33,7 +33,7 @@ export default function App() {
     email: 'mnadirilkhoir@gmail.com',
     noHp: '089508778539',
     alamat: 'LINGK. Gombeng',
-    minat: ['Fullstack Development'],
+    minat: ['Web Development'],
     notifikasi: false,
     foto: require('./assets/Profile.jpeg'),
   };
@@ -51,14 +51,14 @@ export default function App() {
   const [formEmail, setFormEmail] = React.useState(defaultMahasiswa.email);
   const [formNoHp, setFormNoHp] = React.useState(defaultMahasiswa.noHp);
   const [formAlamat, setFormAlamat] = React.useState(defaultMahasiswa.alamat);
-  const [formStatusAktif, setFormStatusAktif] = React.useState(false);
-  const [formNotif, setFormNotif] = React.useState(false);
+  const [formStatusAktif, setFormStatusAktif] = React.useState(defaultMahasiswa.status === 'Aktif');
+  const [formNotif, setFormNotif] = React.useState(defaultMahasiswa.notifikasi);
 
-  // State Checkbox Peminatan
-  const [minatMobile, setMinatMobile] = React.useState(false);
-  const [minatWeb, setMinatWeb] = React.useState(false);
-  const [minatAI, setMinatAI] = React.useState(false);
-  const [minatUIUX, setMinatUIUX] = React.useState(false);
+  // State Checkbox Peminatan (mengikuti data bawaan)
+  const [minatMobile, setMinatMobile] = React.useState(defaultMahasiswa.minat.includes('Mobile Apps'));
+  const [minatWeb, setMinatWeb] = React.useState(defaultMahasiswa.minat.includes('Web Development'));
+  const [minatAI, setMinatAI] = React.useState(defaultMahasiswa.minat.includes('Artificial Intelligence'));
+  const [minatUIUX, setMinatUIUX] = React.useState(defaultMahasiswa.minat.includes('UI/UX Design'));
 
   // State Feedback Snackbar
   const [snackbarVisible, setSnackbarVisible] = React.useState(false);
@@ -107,12 +107,12 @@ export default function App() {
     setFormEmail(defaultMahasiswa.email);
     setFormNoHp(defaultMahasiswa.noHp);
     setFormAlamat(defaultMahasiswa.alamat);
-    setFormStatusAktif(false);
-    setFormNotif(false);
-    setMinatMobile(false);
-    setMinatWeb(false);
-    setMinatAI(false);
-    setMinatUIUX(false);
+    setFormStatusAktif(defaultMahasiswa.status === 'Aktif');
+    setFormNotif(defaultMahasiswa.notifikasi);
+    setMinatMobile(defaultMahasiswa.minat.includes('Mobile Apps'));
+    setMinatWeb(defaultMahasiswa.minat.includes('Web Development'));
+    setMinatAI(defaultMahasiswa.minat.includes('Artificial Intelligence'));
+    setMinatUIUX(defaultMahasiswa.minat.includes('UI/UX Design'));
 
     setSnackbarMessage('Formulir berhasil di-reset ke nilai bawaan.');
     setSnackbarVisible(true);
@@ -125,6 +125,33 @@ export default function App() {
     { kode: 'KU312412', nama: 'Desain UI/UX', sks: 3, nilai: 'A', smt: 2 },
     { kode: 'KK312409', nama: 'Sistem Informasi Berbasis Web', sks: 3, nilai: 'A+', smt: 3 },
   ];
+
+  const totalSks = mataKuliah.reduce((total, item) => total + item.sks, 0);
+
+  const handleBagikanKhs = async () => {
+    const baris = mataKuliah
+      .map(
+        (item) =>
+          `${item.kode} - ${item.nama} | ${item.sks} SKS | Nilai ${item.nilai} | Semester ${item.smt}`
+      )
+      .join('\n');
+    const pesan = [
+      'KARTU HASIL STUDI',
+      `${mahasiswa.nama} (${mahasiswa.npm})`,
+      mahasiswa.prodi,
+      '',
+      baris,
+      '',
+      `Total SKS: ${totalSks}`,
+      `IPK: ${mahasiswa.ipk}`,
+    ].join('\n');
+
+    try {
+      await Share.share({ message: pesan, title: 'Kartu Hasil Studi' });
+    } catch {
+      Alert.alert('Gagal membagikan KHS', 'Coba lagi beberapa saat lagi.');
+    }
+  };
 
   return (
     <PaperProvider>
@@ -212,7 +239,7 @@ export default function App() {
                 left={<TextInput.Icon icon="card-account-details" />}
                 style={styles.input}
               />
-              <HelperText type={isNpmValid ? 'info' : 'error'} visible={false}>
+              <HelperText type={isNpmValid ? 'info' : 'error'} visible={!isNpmValid}>
                 {isNpmValid ? '✓ Format NPM valid (10 digit)' : '⚠ NPM harus tepat 10 digit angka'}
               </HelperText>
 
@@ -252,7 +279,7 @@ export default function App() {
                 left={<TextInput.Icon icon="email" />}
                 style={styles.input}
               />
-              <HelperText type={isEmailValid ? 'info' : 'error'} visible={false}>
+              <HelperText type={isEmailValid ? 'info' : 'error'} visible={!isEmailValid}>
                 {isEmailValid ? '✓ Alamat email valid' : '⚠ Masukkan format email yang valid (@ dan domain)'}
               </HelperText>
 
@@ -430,11 +457,11 @@ export default function App() {
                 </DataTable>
               </ScrollView>
               <View style={styles.footer}>
-                <PaperText style={styles.totalText}>Total SKS diambil: 13 SKS</PaperText>
+                <PaperText style={styles.totalText}>Total SKS diambil: {totalSks} SKS</PaperText>
               </View>
               <View style={styles.buttonContainer}>
-                <Button icon="download" mode="contained" onPress={() => console.log('Download KHS')}>
-                  Download KHS
+                <Button icon="share-variant" mode="contained" onPress={handleBagikanKhs}>
+                  Bagikan KHS
                 </Button>
               </View>
             </Card.Content>

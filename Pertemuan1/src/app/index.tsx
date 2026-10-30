@@ -35,7 +35,7 @@ export default function HomeScreen() {
         <ThemedView style={styles.heroSection}>
           <AnimatedIcon />
           <ThemedText type="title" style={styles.title}>
-            ingin jago ngoding tapi enggan ngoding&nbsp;Expo
+            Belajar membangun aplikasi mobile dengan&nbsp;Expo
           </ThemedText>
         </ThemedView>
 

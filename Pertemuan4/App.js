@@ -29,6 +29,10 @@ export default function App() {
     { kode: 'KK312409', nama: 'Praktek Sistem Informasi Berbasis Web', sks: 3, smt: 4 },
   ];
 
+  // Total SKS dihitung dari data agar tidak pernah berbeda dengan tabel
+  const totalSksKhs = mataKuliah.reduce((total, item) => total + item.sks, 0);
+  const totalSksFrs = mataKuliahFrs.reduce((total, item) => total + item.sks, 0);
+
   return (
     <View style={{ flex: 1, backgroundColor: '#eceff1', paddingTop: 50 }}>
       <Text style={styles.mainTitle}>Sistem Akademik Mahasiswa</Text>
@@ -174,27 +178,26 @@ export default function App() {
             
           </ScrollView>
           <View style={styles.footer}>
-            <Text style={styles.totalText}>Total SKS diambil: 13 SKS</Text>
+            <Text style={styles.totalText}>Total SKS diambil: {totalSksKhs} SKS</Text>
           </View>
         </View>
 
         {/* ==================================================== */}
-        {/* BAGIAN 2: KHS (MENGGUNAKAN STYLESHEET API)           */}
+        {/* BAGIAN 3: FRS (MENGGUNAKAN STYLESHEET API)           */}
         {/* ==================================================== */}
         <View style={styles.cardFrs}>
-          <Text style={styles.khsTitle}>[ STYLESHEET ] KARTU HASIL STUDI (KHS)</Text>
+          <Text style={[styles.khsTitle, styles.frsTitle]}>[ STYLESHEET ] KARTU RENCANA STUDI (FRS)</Text>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View>
               {/* Header Tabel */}
-              <View style={styles.tableHeader}>
+              <View style={[styles.tableHeader, styles.frsTableHeader]}>
                 <Text style={[styles.columnHeader, styles.colMk]}>Mata Kuliah</Text>
                 <Text style={[styles.columnHeader, styles.colSks, styles.textCenter]}>SKS</Text>
-                {/* <Text style={[styles.columnHeader, styles.colNilai, styles.textCenter]}>Nilai</Text> */}
                 <Text style={[styles.columnHeader, styles.colSmt, styles.textCenter]}>Semester</Text>
               </View>
 
-              {/* Data Mata Kuliah */}
-              {mataKuliah.map((item, index) => (
+              {/* Data Mata Kuliah FRS */}
+              {mataKuliahFrs.map((item, index) => (
                 <View
                   key={item.kode}
                   style={[styles.tableRow, index % 2 === 1 && styles.tableRowAlt]}
@@ -206,24 +209,15 @@ export default function App() {
                   <Text style={[styles.cellText, styles.colSks, styles.textCenter]}>
                     {item.sks}
                   </Text>
-                  {/* <View style={[styles.colNilai, styles.alignCenter]}>
-                    <View style={styles.badgeNilai}>
-                      <Text style={styles.badgeText}>{item.nilai}</Text>
-                    </View>
-                  </View> */}
                   <Text style={[styles.cellText, styles.colSmt, styles.textCenter]}>
                     {item.smt}
                   </Text>
                 </View>
               ))}
             </View>
-
-        
-
-            
           </ScrollView>
           <View style={styles.footer}>
-            <Text style={styles.totalText}>Total SKS diambil: 13 SKS</Text>
+            <Text style={styles.totalText}>Total SKS diambil: {totalSksFrs} SKS</Text>
           </View>
         </View>
 
@@ -277,6 +271,9 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     marginBottom: 12,
   },
+  frsTitle: {
+    color: '#2e7d32',
+  },
   tableHeader: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -285,6 +282,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 8,
     marginBottom: 6,
+  },
+  frsTableHeader: {
+    backgroundColor: '#e8f5e9',
   },
   columnHeader: {
     fontSize: 12,

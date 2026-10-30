@@ -47,7 +47,7 @@ Routing mengikuti `src/app/`: tiap file adalah satu layar, `_layout.tsx` mendefi
 
 ## Catatan
 
-- Teks hero di `src/app/index.tsx` baris 38 masih berupa frasa informal yang bisa diganti.
+- Teks hero di `src/app/index.tsx` baris 38 berbunyi "Belajar membangun aplikasi mobile dengan Expo".
 - Proyek ini memakai TypeScript, berbeda dari folder Pertemuan lain yang memakai JavaScript.
 
 [README utama](../README.md)
